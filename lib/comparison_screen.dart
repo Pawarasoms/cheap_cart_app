@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopping_list/compare_item.dart';
+import 'package:shopping_list/dialog_popup.dart';
 import 'constants.dart';
 import 'shopping_list.dart';
 
@@ -34,8 +35,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
   List item =[
     [1,false],
     [2,false],
-
-
   ];
 
 
@@ -43,6 +42,9 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     setState(() {
       item[index][1] =!item[index][1];
     });
+    showDialog(context: context, builder: (context){
+      return DialogPopUp();
+    },);
   }
 
   void addItem(){
@@ -59,9 +61,9 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
         itemNum= itemNum-1;
       }
     });
-
-
   }
+
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       ),
                       onPressed: () {
                         print("Reset");
+                        _controller.clear();
                         reset();
                       },
                     ),
@@ -135,6 +138,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
           ),
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.only(bottom: 30),
               itemCount: item.length,
               itemBuilder: (context, index) {
                 return CompareItem(
@@ -177,5 +181,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
 
 
 }
+
+
 
 

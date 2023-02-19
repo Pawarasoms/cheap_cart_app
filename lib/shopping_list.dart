@@ -18,7 +18,6 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       _selectedIndex = index;
     });
 
-
     if (index == 0) {
       Navigator.pushReplacement(
         context,

@@ -13,3 +13,4 @@ const kLigthRed = Color(0xFFFFCBCB);
 const kLigthBlue = Color(0xFFD9EDFF);
 const kLigthPink = Color(0xFFFFC7E2);
 const kDarkPink = Color(0xFFD31671);
+const kDarkBlue = Color(0xFF195C9A);
