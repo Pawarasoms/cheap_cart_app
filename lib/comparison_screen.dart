@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shopping_list/compare_item.dart';
 import 'constants.dart';
 import 'shopping_list.dart';
@@ -12,6 +13,7 @@ class ComparisonScreen extends StatefulWidget {
 
 class _ComparisonScreenState extends State<ComparisonScreen> {
 
+  int itemNum = 2;
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -29,7 +31,37 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     }
   }
 
+  List item =[
+    [1,false],
+    [2,false],
 
+
+  ];
+
+
+  void checkBoxChanged(bool? value, int index){
+    setState(() {
+      item[index][1] =!item[index][1];
+    });
+  }
+
+  void addItem(){
+    setState(() {
+      item.add([itemNum+1,false]);
+      itemNum = itemNum+1;
+    });
+  }
+
+  void reset(){
+    setState(() {
+      while(itemNum > 2){
+        item.removeAt(itemNum-1);
+        itemNum= itemNum-1;
+      }
+    });
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,59 +74,79 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
         backgroundColor: headAndTailBG,
         foregroundColor: kDarkGreen,
       ),
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 30, right: 20, bottom: 20),
+                child: Row(
+                  children: [
+                    FloatingActionButton.extended(
+                      label: const Text(
+                        'Reset',
+                        style: TextStyle(
+                          color: redText,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      backgroundColor: kLigthRed,
+                      icon: const Icon(
+                        Icons.refresh,
+                        size: 24.0,
+                        color: redText,
+                      ),
+                      onPressed: () {
+                        print("Reset");
+                        reset();
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    FloatingActionButton.extended(
+                      label: const Text(
+                        'Add Item',
+                        style: TextStyle(
+                          color: kDarkGreen,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      backgroundColor: kLigthBlue,
+                      icon: const Icon(
+                        Icons.add_circle_outline,
+                        size: 24.0,
+                        color: kDarkGreen,
+                      ),
+                      onPressed: () {
+                        addItem();
+                        print("Add Item");
 
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 30, right: 20,bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FloatingActionButton.extended(
-                    label: const Text(
-                      'Reset',
-                      style: TextStyle(color: redText, fontWeight: FontWeight.bold,fontSize: 18),
+                      },
                     ),
-                    backgroundColor: kLigthRed,
-                    icon: const Icon(
-                      Icons.refresh,
-                      size: 24.0,
-                      color: redText,
-                    ),
-                    onPressed: () {
-                      print("Reset");
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FloatingActionButton.extended(
-                    label: const Text(
-                      'Add Item',
-                      style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold,fontSize: 18),
-                    ),
-                    backgroundColor: kLigthBlue,
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      size: 24.0,
-                      color: kDarkGreen,
-                    ),
-                    onPressed: () {
-                      print("Add Item");
-                    },
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              )
+            ],
+
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: item.length,
+              itemBuilder: (context, index) {
+                return CompareItem(
+                  itemNum: item[index][0],
+                  addCart: item[index][1],
+                  onChanged: (value) => checkBoxChanged(value, index),
+                );
+              },
             ),
-            CompareItem(),
-            CompareItem(),
+          ),
 
-            Container(),
-            Container(),
-            Container(),
-          ],
-        ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -112,11 +164,18 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
         backgroundColor: headAndTailBG,
         unselectedFontSize: 15,
         selectedFontSize: 20,
-        selectedIconTheme: const IconThemeData(color: kDarkGreen, size: 28),
+        selectedIconTheme:
+        const IconThemeData(color: kDarkGreen, size: 28),
         onTap: _onItemTapped,
       ),
     );
   }
+
+
+
+
+
+
 }
 
 

@@ -18,6 +18,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       _selectedIndex = index;
     });
 
+
     if (index == 0) {
       Navigator.pushReplacement(
         context,
@@ -40,8 +41,55 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         backgroundColor: kLigthPink,
         foregroundColor: kDarkPink,
       ),
-      body: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 30, right: 20,bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton.extended(
+                    label: const Text(
+                      'Reset',
+                      style: TextStyle(color: redText, fontWeight: FontWeight.bold,fontSize: 18),
+                    ),
+                    backgroundColor: kLigthRed,
+                    icon: const Icon(
+                      Icons.refresh,
+                      size: 24.0,
+                      color: redText,
+                    ),
+                    onPressed: () {
+                      print("Reset");
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  FloatingActionButton.extended(
+                    label: const Text(
+                      'Add Item',
+                      style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold,fontSize: 18),
+                    ),
+                    backgroundColor: kLigthBlue,
+                    icon: const Icon(
+                      Icons.add_circle_outline,
+                      size: 24.0,
+                      color: kDarkGreen,
+                    ),
+                    onPressed: () {
+                      print("Add Item");
+                    },
+                  ),
+                ],
+              ),
+            ),
 
+
+
+          ],
+        ),
       ),
 
 
