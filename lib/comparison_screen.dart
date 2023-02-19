@@ -49,13 +49,17 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
 
   void addItem(){
     setState(() {
-      item.add([itemNum+1,false]);
-      itemNum = itemNum+1;
+     if( itemNum+1 < 5){
+       item.add([itemNum+1,false]);
+       itemNum = itemNum+1;
+     }
     });
   }
 
   void reset(){
     setState(() {
+      item[0][1] =false;
+      item[1][1] =false;
       while(itemNum > 2){
         item.removeAt(itemNum-1);
         itemNum= itemNum-1;
@@ -113,7 +117,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       label: const Text(
                         'Add Item',
                         style: TextStyle(
-                          color: kDarkGreen,
+                          color: kDarkBlue,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
@@ -122,7 +126,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       icon: const Icon(
                         Icons.add_circle_outline,
                         size: 24.0,
-                        color: kDarkGreen,
+                        color: kDarkBlue,
                       ),
                       onPressed: () {
                         addItem();

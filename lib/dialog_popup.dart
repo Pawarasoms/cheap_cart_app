@@ -8,7 +8,7 @@ class DialogPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(40.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       backgroundColor: headAndTailBG,
       content: Container(
@@ -23,7 +23,7 @@ class DialogPopUp extends StatelessWidget {
                 color: kDarkGreen
               ),),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

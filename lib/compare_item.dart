@@ -156,7 +156,8 @@ class _CompareItemState extends State<CompareItem> {
                                   textAlignVertical: TextAlignVertical.center,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(4),
                                   ], // Only numbers can be entered
                                 ),
                               ),
@@ -191,7 +192,8 @@ class _CompareItemState extends State<CompareItem> {
                                   textAlignVertical: TextAlignVertical.center,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
                                   ], // Only numbers can be entered
                                 ),
                               ),
@@ -226,7 +228,8 @@ class _CompareItemState extends State<CompareItem> {
                                   textAlignVertical: TextAlignVertical.center,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
                                   ], // Only numbers can be entered
                                 ),
                               ),
