@@ -2,17 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopping_list/compare_item.dart';
 import 'package:shopping_list/dialog_popup.dart';
+import 'package:shopping_list/item_model.dart';
 import 'constants.dart';
 import 'shopping_list.dart';
+import 'package:provider/provider.dart';
+
 
 class ComparisonScreen extends StatefulWidget {
-  const ComparisonScreen({Key? key}) : super(key: key);
+
+  final List<int> item;
+
+  ComparisonScreen({super.key,required this.item});
 
   @override
   State<ComparisonScreen> createState() => _ComparisonScreenState();
 }
 
 class _ComparisonScreenState extends State<ComparisonScreen> {
+
+  List<int> _item = <int>[];
+
+  @override
+  void initState() {
+    _item = widget.item;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
 
   int itemNum = 2;
   int _selectedIndex = 0;
@@ -56,21 +76,27 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     });
   }
 
-  void reset(){
-    setState(() {
-      item[0][1] =false;
-      item[1][1] =false;
-      while(itemNum > 2){
-        item.removeAt(itemNum-1);
-        itemNum= itemNum-1;
-      }
-    });
-  }
+  // void reset(){
+  //   // setState(() {
+  //   //   item[0][1] =false;
+  //   //   item[1][1] =false;
+  //   //   while(itemNum > 2){
+  //   //     item.removeAt(itemNum-1);
+  //   //     itemNum= itemNum-1;
+  //   //   }
+  //   // });
+  //   FlutterRestart.restartApp();
+  // }
+
 
   TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    List<int> myItem1 = Provider.of<ItemModel>(context).item1;
+    List<int> myItem2 = Provider.of<ItemModel>(context).item2;
+    List<int> myItem3 = Provider.of<ItemModel>(context).item3;
+    List<int> myItem4 = Provider.of<ItemModel>(context).item4;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -107,7 +133,10 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       onPressed: () {
                         print("Reset");
                         _controller.clear();
-                        reset();
+                        // print(myItem1);
+                        // print(myItem2);
+                        // print(myItem3);
+                        // print(myItem4);
                       },
                     ),
                     const SizedBox(

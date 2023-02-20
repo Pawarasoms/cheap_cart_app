@@ -21,7 +21,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     if (index == 0) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ComparisonScreen()),
+        MaterialPageRoute(builder: (context) => ComparisonScreen(item: [],)),
       );
     } else {
       Navigator.of(context).popUntil((route) => route.isFirst);
