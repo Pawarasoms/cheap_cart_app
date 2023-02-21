@@ -91,9 +91,15 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<int> myItem1 = Provider.of<ItemModel>(context).item1;
+    List<int> myItem2 = Provider.of<ItemModel>(context).item2;
+    List<int> myItem3 = Provider.of<ItemModel>(context).item3;
+    List<int> myItem4 = Provider.of<ItemModel>(context).item4;
+
     List<TextEditingController> sizeController = Provider.of<ItemModel>(context).sizeController;
     List<TextEditingController> qtyController = Provider.of<ItemModel>(context).qtyController;
     List<TextEditingController> priceController = Provider.of<ItemModel>(context).priceController;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -129,7 +135,20 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       ),
                       onPressed: () {
                         print("Reset");
+                        print("before");
+                        print(myItem1);
+                        print(myItem2);
+                        print(myItem3);
+                        print(myItem4);
                         reset();
+
+                        setState(() {
+                          myItem1 = <int>[];
+                          myItem2 = <int>[];
+                          myItem3 = <int>[];
+                          myItem4 = <int>[];
+                        });
+
                         sizeController[0].clear();
                         qtyController[0].clear();
                         priceController[0].clear();
@@ -145,6 +164,12 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         sizeController[3].clear();
                         qtyController[3].clear();
                         priceController[3].clear();
+
+                        print("after");
+                        print(myItem1);
+                        print(myItem2);
+                        print(myItem3);
+                        print(myItem4);
                       },
                     ),
                     const SizedBox(

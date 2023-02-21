@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopping_list/comparison_screen.dart';
@@ -24,10 +26,6 @@ class CompareItem extends StatefulWidget {
 class CompareItemState extends State<CompareItem> {
 
   List<int> item = List<int>.filled(3, 0);
-
-  // final sizeController = TextEditingController();
-  // final qtyController = TextEditingController();
-  // final priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -157,12 +155,22 @@ class CompareItemState extends State<CompareItem> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                 child: TextField(
-
                                   controller: sizeController[widget.itemNum-1],
-                                  onChanged: (value) {
-                                    item[0] = int.tryParse(value) ?? 0;
+                                  onSubmitted: (value) {
+                                    int size = int.tryParse(value) ?? 0;
+                                    setState(() {
+                                      item[0] = size;
+                                    });
+                                    print ("widget.itemNum = ${widget.itemNum}");
+
+                                    print("item[0] = ${item[0]}");
+                                    print("(item): ${item}");
+                                    print("before change (myItem1): ${myItem1}");
+
+
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
+                                      print("Done for item1");
                                     }else if (widget.itemNum == 2 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem2(item);
                                     }else if (widget.itemNum == 3 ){
@@ -170,6 +178,7 @@ class CompareItemState extends State<CompareItem> {
                                     }else{
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem4(item);
                                     }
+                                    print("after change (myItem1): ${myItem1}");
 
                                   },
                                   textInputAction: TextInputAction.next,
@@ -303,15 +312,12 @@ class CompareItemState extends State<CompareItem> {
             theOnTapFunc: () {
               print('pressed');
               // print(item);
-              print("item"+widget.itemNum.toString());
-              print(widget.itemNum);
+              // print("item"+widget.itemNum.toString());
+              // print(widget.itemNum);
               print(myItem1);
               print(myItem2);
               print(myItem3);
               print(myItem4);
-              print(sizeController);
-              print(qtyController);
-              print(priceController);
 
             },
           ),

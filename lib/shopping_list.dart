@@ -110,25 +110,6 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         unselectedFontSize: 15,
         selectedFontSize: 20,
         selectedIconTheme: const IconThemeData(color: kDarkPink, size: 28),
-        // onTap: (index) {
-        //   switch (index) {
-        //     case 0:
-        //       Navigator.pushReplacement(
-        //         context,
-        //         MaterialPageRoute(builder: (context) => ComparisonScreen()),
-        //       );
-        //       print("0000000");
-        //       break;
-        //     case 1:
-        //       _onItemTapped(index);
-        //       // Navigator.pushReplacement(
-        //       //   context,
-        //       //   MaterialPageRoute(builder: (context) => ShoppingListScreen()),
-        //       // );
-        //       print("111111111");
-        //       break;
-        //   }
-        // },
         onTap: _onItemTapped,
       ),
     );

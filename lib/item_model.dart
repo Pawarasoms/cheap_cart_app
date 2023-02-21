@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-class ItemModel{
+class ItemModel extends ChangeNotifier{
 
   List<int> _item1=<int>[];
 
@@ -13,6 +13,11 @@ class ItemModel{
 
   void updateMyItem1(List<int> newItem1) {
     _item1 = newItem1;
+    notifyListeners();
+  }
+
+  void clearItem1() {
+    item1.clear();
   }
 
   List<int> _item2=<int>[];
@@ -25,6 +30,7 @@ class ItemModel{
 
   void updateMyItem2(List<int> newItem2) {
     _item2 = newItem2;
+    notifyListeners();
   }
 
   List<int> _item3=<int>[];
@@ -37,6 +43,7 @@ class ItemModel{
 
   void updateMyItem3(List<int> newItem3) {
     _item3 = newItem3;
+    notifyListeners();
   }
 
   List<int> _item4=<int>[];
@@ -48,6 +55,7 @@ class ItemModel{
   }
   void updateMyItem4(List<int> newItem4) {
     _item4 = newItem4;
+    notifyListeners();
   }
 
   List<TextEditingController> sizeController = [

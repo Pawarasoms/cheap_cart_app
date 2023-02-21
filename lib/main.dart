@@ -10,13 +10,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: ComparisonScreen(item: [],),
-    // );
-    return Provider(create: (_)=>ItemModel(),
-    child: MaterialApp(
-      home: ComparisonScreen(item: [],),
-    ),
+    return ChangeNotifierProvider(
+      create: (_) => ItemModel(),
+      child: Consumer<ItemModel>(
+        builder: (context, itemModel, child) {
+          return MultiProvider(
+            providers: [ChangeNotifierProvider<ItemModel>(create: (context) => ItemModel())],
+            child: MaterialApp(home: ComparisonScreen(item: [],)),
+          );
+
+        },
+      ),
     );
   }
 }
