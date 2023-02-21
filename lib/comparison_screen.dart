@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopping_list/base_card.dart';
@@ -62,7 +64,10 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     });
   }
 
-  TextEditingController _controller = TextEditingController();
+  double pricePerUnit(List<int> item){
+    var result =  item[2] / (item[0] * item[1]);
+    return double.parse(result.toStringAsFixed(2));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +219,90 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                     print("item 2 : ${myItem2}");
                     print("item 3 : ${myItem3}");
                     print("item 4 : ${myItem4}");
-                    print(item.length);
+
+                    double perDiff = 0.0;
+                    switch (item.length){
+
+                      case 2:{
+                        if(myItem1.isNotEmpty && myItem2.isNotEmpty){
+                          double item1 = pricePerUnit(myItem1);
+                          double item2 = pricePerUnit(myItem2);
+
+                          Map<double, String> itemMap = {
+                            item1: "Item 1",
+                            item2: "Item 2",
+                          };
+                          List<double> prices = itemMap.keys.toList();
+                          prices.sort();
+                          double cheapestPrice = prices[0];
+                          double runnerUpPrice = prices[1];
+                          String? cheapestItem = itemMap[cheapestPrice];
+                          String? runnerUpItem = itemMap[runnerUpPrice];
+
+                          perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+
+                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                        }else{
+                          break;
+                        }
+                      }
+                      break;
+                      case 3:{
+                        if(myItem1.isNotEmpty && myItem2.isNotEmpty && myItem3.isNotEmpty){
+                          double item1 = pricePerUnit(myItem1);
+                          double item2 = pricePerUnit(myItem2);
+                          double item3 = pricePerUnit(myItem3);
+
+                          Map<double, String> itemMap = {
+                            item1: "Item 1",
+                            item2: "Item 2",
+                            item3: "Item 3",
+                          };
+                          List<double> prices = itemMap.keys.toList();
+                          prices.sort();
+                          double cheapestPrice = prices[0];
+                          double runnerUpPrice = prices[1];
+                          String? cheapestItem = itemMap[cheapestPrice];
+                          String? runnerUpItem = itemMap[runnerUpPrice];
+
+                          perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+
+                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                        }else{
+                          break;
+                        }
+
+                      }
+                      break;
+                      case 4:{
+                        if(myItem1.isNotEmpty && myItem2.isNotEmpty && myItem3.isNotEmpty && myItem4.isNotEmpty){
+                          double item1 = pricePerUnit(myItem1);
+                          double item2 = pricePerUnit(myItem2);
+                          double item3 = pricePerUnit(myItem3);
+                          double item4 = pricePerUnit(myItem4);
+
+                          Map<double, String> itemMap = {
+                            item1: "Item 1",
+                            item2: "Item 2",
+                            item3: "Item 3",
+                            item4: "Item 4",
+                          };
+                          List<double> prices = itemMap.keys.toList();
+                          prices.sort();
+                          double cheapestPrice = prices[0];
+                          double runnerUpPrice = prices[1];
+                          String? cheapestItem = itemMap[cheapestPrice];
+                          String? runnerUpItem = itemMap[runnerUpPrice];
+
+                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                        }
+                        else{
+                          break;
+                        }
+                      }
+                      break;
+                    }
+
                   },
                 ),
               ),
