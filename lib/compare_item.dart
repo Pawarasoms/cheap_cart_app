@@ -25,21 +25,9 @@ class CompareItemState extends State<CompareItem> {
 
   List<int> item = List<int>.filled(3, 0);
 
-  final sizeController = TextEditingController();
-  final qtyController = TextEditingController();
-  final priceController = TextEditingController();
-
-  List<int> _item = <int>[];
-
-  void _updateData(List<int> newItem) {
-    setState(() {
-      _item = newItem;
-      print(_item);
-      // Navigator.push(context, MaterialPageRoute(builder: (context)=>ComparisonScreen(item: _item)));
-      // ComparisonScreen(item:_item,);
-      // Navigator.pop(context,_item);
-    });
-  }
+  // final sizeController = TextEditingController();
+  // final qtyController = TextEditingController();
+  // final priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +35,11 @@ class CompareItemState extends State<CompareItem> {
     List<int> myItem2 = Provider.of<ItemModel>(context).item2;
     List<int> myItem3 = Provider.of<ItemModel>(context).item3;
     List<int> myItem4 = Provider.of<ItemModel>(context).item4;
+
+    List<TextEditingController> sizeController = Provider.of<ItemModel>(context).sizeController;
+    List<TextEditingController> qtyController = Provider.of<ItemModel>(context).qtyController;
+    List<TextEditingController> priceController = Provider.of<ItemModel>(context).priceController;
+
     return Container(
 
       child: Column(children: [
@@ -164,10 +157,10 @@ class CompareItemState extends State<CompareItem> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                 child: TextField(
-                                  controller: sizeController,
+
+                                  controller: sizeController[widget.itemNum-1],
                                   onChanged: (value) {
                                     item[0] = int.tryParse(value) ?? 0;
-                                    _updateData(item);
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
                                     }else if (widget.itemNum == 2 ){
@@ -214,7 +207,7 @@ class CompareItemState extends State<CompareItem> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                 child: TextField(
-                                  controller: qtyController,
+                                  controller: qtyController[widget.itemNum-1],
                                   onChanged: (value) {
                                     item[1] = int.tryParse(value) ?? 0;
                                     if (widget.itemNum == 1 ){
@@ -262,7 +255,7 @@ class CompareItemState extends State<CompareItem> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                 child: TextField(
-                                  controller: priceController,
+                                  controller: priceController[widget.itemNum-1],
                                   onChanged: (value) {
                                     item[2] = int.tryParse(value) ?? 0;
                                     if (widget.itemNum == 1 ){
@@ -316,6 +309,10 @@ class CompareItemState extends State<CompareItem> {
               print(myItem2);
               print(myItem3);
               print(myItem4);
+              print(sizeController);
+              print(qtyController);
+              print(priceController);
+
             },
           ),
         ),

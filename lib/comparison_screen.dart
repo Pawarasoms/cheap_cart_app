@@ -33,7 +33,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     super.dispose();
   }
 
-
   int itemNum = 2;
   int _selectedIndex = 0;
 
@@ -76,27 +75,25 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     });
   }
 
-  // void reset(){
-  //   // setState(() {
-  //   //   item[0][1] =false;
-  //   //   item[1][1] =false;
-  //   //   while(itemNum > 2){
-  //   //     item.removeAt(itemNum-1);
-  //   //     itemNum= itemNum-1;
-  //   //   }
-  //   // });
-  //   FlutterRestart.restartApp();
-  // }
-
+  void reset(){
+    setState(() {
+      item[0][1] =false;
+      item[1][1] =false;
+      while(itemNum > 2){
+        item.removeAt(itemNum-1);
+        itemNum= itemNum-1;
+      }
+    });
+  }
 
   TextEditingController _controller = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
-    List<int> myItem1 = Provider.of<ItemModel>(context).item1;
-    List<int> myItem2 = Provider.of<ItemModel>(context).item2;
-    List<int> myItem3 = Provider.of<ItemModel>(context).item3;
-    List<int> myItem4 = Provider.of<ItemModel>(context).item4;
+    List<TextEditingController> sizeController = Provider.of<ItemModel>(context).sizeController;
+    List<TextEditingController> qtyController = Provider.of<ItemModel>(context).qtyController;
+    List<TextEditingController> priceController = Provider.of<ItemModel>(context).priceController;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -132,11 +129,22 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       ),
                       onPressed: () {
                         print("Reset");
-                        _controller.clear();
-                        // print(myItem1);
-                        // print(myItem2);
-                        // print(myItem3);
-                        // print(myItem4);
+                        reset();
+                        sizeController[0].clear();
+                        qtyController[0].clear();
+                        priceController[0].clear();
+
+                        sizeController[1].clear();
+                        qtyController[1].clear();
+                        priceController[1].clear();
+
+                        sizeController[2].clear();
+                        qtyController[2].clear();
+                        priceController[2].clear();
+
+                        sizeController[3].clear();
+                        qtyController[3].clear();
+                        priceController[3].clear();
                       },
                     ),
                     const SizedBox(
@@ -160,7 +168,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       onPressed: () {
                         addItem();
                         print("Add Item");
-
                       },
                     ),
                   ],
@@ -207,13 +214,14 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
       ),
     );
   }
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
 
 
 

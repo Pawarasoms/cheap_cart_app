@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 
 class ItemModel{
@@ -49,53 +50,19 @@ class ItemModel{
     _item4 = newItem4;
   }
 
-  TextEditingController _sizeController1 = TextEditingController();
+  List<TextEditingController> sizeController = [
+    for (int i = 0; i < 4; i++)
+      TextEditingController()
+  ];
 
-  TextEditingController get sizeController1 => _sizeController1;
+  List<TextEditingController> qtyController = [
+    for (int i = 0; i < 4; i++)
+      TextEditingController()
+  ];
 
-  TextEditingController _qtyController1 = TextEditingController();
-
-  TextEditingController get qtyController1 => _qtyController1;
-
-  TextEditingController _priceController1 = TextEditingController();
-
-  TextEditingController get priceController1 => _priceController1;
-
-  TextEditingController _sizeController2 = TextEditingController();
-
-  TextEditingController get sizeController2 => _sizeController2;
-
-  TextEditingController _qtyController2 = TextEditingController();
-
-  TextEditingController get qtyController2 => _qtyController2;
-
-  TextEditingController _priceController2 = TextEditingController();
-
-  TextEditingController get priceController2 => _priceController2;
-
-  TextEditingController _sizeController3 = TextEditingController();
-
-  TextEditingController get sizeController3 => _sizeController3;
-
-  TextEditingController _qtyController3 = TextEditingController();
-
-  TextEditingController get qtyController3 => _qtyController3;
-
-  TextEditingController _priceController3 = TextEditingController();
-
-  TextEditingController get priceController3 => _priceController3;
-
-  TextEditingController _sizeController4 = TextEditingController();
-
-  TextEditingController get sizeController4 => _sizeController4;
-
-  TextEditingController _qtyController4 = TextEditingController();
-
-  TextEditingController get qtyController4 => _qtyController4;
-
-  TextEditingController _priceController4 = TextEditingController();
-
-  TextEditingController get priceController4 => _priceController4;
-
+  List<TextEditingController> priceController = [
+    for (int i = 0; i < 4; i++)
+      TextEditingController()
+  ];
 
 }
