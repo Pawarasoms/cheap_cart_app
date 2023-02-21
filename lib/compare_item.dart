@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shopping_list/comparison_screen.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
 import 'base_card.dart';
@@ -11,12 +8,11 @@ import 'item_model.dart';
 class CompareItem extends StatefulWidget {
 
   CompareItem({
-    required this.itemNum, required this.addCart, required this.onChanged
+    required this.itemNum, required this.addCart
   });
 
   final int itemNum;
   final bool addCart;
-  Function(bool?)? onChanged;
 
   @override
   CompareItemState createState() => CompareItemState();
@@ -50,22 +46,11 @@ class CompareItemState extends State<CompareItem> {
                 "Item "+ widget.itemNum.toString(),
                 style: TextStyle(fontSize: 20, color: kLightGrey),
               ),
-              Container(
-                child: Row(
-                  children: [
-                    Text(
-                      "Add to cart",
-                      style: TextStyle(fontSize: 20, color: kDarkGreen),
-                    ),
-                    Checkbox(value: widget.addCart, onChanged: widget.onChanged, activeColor: kDarkGreen,)
-                  ],
-                ),
-              ),
             ],
           ),
         ),
         Container(
-          padding: const EdgeInsets.only(left: 15, right: 15,),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
           child: BaseCard(
             theColor: backgroundButton,
             theChild: Container(
@@ -157,17 +142,7 @@ class CompareItemState extends State<CompareItem> {
                                 child: TextField(
                                   controller: sizeController[widget.itemNum-1],
                                   onSubmitted: (value) {
-                                    int size = int.tryParse(value) ?? 0;
-                                    setState(() {
-                                      item[0] = size;
-                                    });
-                                    print ("widget.itemNum = ${widget.itemNum}");
-
-                                    print("item[0] = ${item[0]}");
-                                    print("(item): ${item}");
-                                    print("before change (myItem1): ${myItem1}");
-
-
+                                    item[0] = int.tryParse(value) ?? 0;
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
                                       print("Done for item1");
@@ -178,7 +153,6 @@ class CompareItemState extends State<CompareItem> {
                                     }else{
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem4(item);
                                     }
-                                    print("after change (myItem1): ${myItem1}");
 
                                   },
                                   textInputAction: TextInputAction.next,
@@ -311,16 +285,6 @@ class CompareItemState extends State<CompareItem> {
             ),
             theOnTapFunc: () {
               print('pressed');
-              // print(item);
-              // print("item"+widget.itemNum.toString());
-              // print(widget.itemNum);
-
-
-              print(myItem1);
-              print(myItem2);
-              print(myItem3);
-              print(myItem4);
-
             },
           ),
         ),
