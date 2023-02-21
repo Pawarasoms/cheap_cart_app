@@ -147,6 +147,10 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                           myItem2 = <int>[];
                           myItem3 = <int>[];
                           myItem4 = <int>[];
+                          Provider.of<ItemModel>(context, listen: false).updateMyItem1(myItem1);
+                          Provider.of<ItemModel>(context, listen: false).updateMyItem2(myItem2);
+                          Provider.of<ItemModel>(context, listen: false).updateMyItem3(myItem3);
+                          Provider.of<ItemModel>(context, listen: false).updateMyItem4(myItem4);
                         });
 
                         sizeController[0].clear();

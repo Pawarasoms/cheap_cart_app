@@ -314,6 +314,8 @@ class CompareItemState extends State<CompareItem> {
               // print(item);
               // print("item"+widget.itemNum.toString());
               // print(widget.itemNum);
+
+
               print(myItem1);
               print(myItem2);
               print(myItem3);
