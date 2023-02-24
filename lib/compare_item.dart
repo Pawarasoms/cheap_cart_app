@@ -8,11 +8,11 @@ import 'item_model.dart';
 class CompareItem extends StatefulWidget {
 
   CompareItem({
-    required this.itemNum, required this.addCart
+    required this.itemNum, required this.isCheapest
   });
 
   final int itemNum;
-  final bool addCart;
+  final bool isCheapest;
 
   @override
   CompareItemState createState() => CompareItemState();
@@ -52,7 +52,8 @@ class CompareItemState extends State<CompareItem> {
         Container(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
           child: BaseCard(
-            theColor: backgroundButton,
+            theColor:widget.isCheapest ? kLigthPink : backgroundButton,
+
             theChild: Container(
               width: 600.0,
               height: 150.0,
@@ -141,11 +142,10 @@ class CompareItemState extends State<CompareItem> {
                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                 child: TextField(
                                   controller: sizeController[widget.itemNum-1],
-                                  onSubmitted: (value) {
+                                  onChanged: (value) {
                                     item[0] = int.tryParse(value) ?? 0;
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
-                                      print("Done for item1");
                                     }else if (widget.itemNum == 2 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem2(item);
                                     }else if (widget.itemNum == 3 ){
@@ -153,7 +153,6 @@ class CompareItemState extends State<CompareItem> {
                                     }else{
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem4(item);
                                     }
-
                                   },
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(

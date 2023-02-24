@@ -22,6 +22,8 @@ class ComparisonScreen extends StatefulWidget {
 class _ComparisonScreenState extends State<ComparisonScreen> {
 
   List<int> _item = <int>[];
+  List<int> cheapest = <int>[];
+
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
      if( itemNum+1 < 5){
        item.add([itemNum+1,false]);
        itemNum = itemNum+1;
+       print(itemNum);
      }
     });
   }
@@ -76,6 +79,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     List<int> myItem2 = Provider.of<ItemModel>(context).item2;
     List<int> myItem3 = Provider.of<ItemModel>(context).item3;
     List<int> myItem4 = Provider.of<ItemModel>(context).item4;
+
 
     List<TextEditingController> sizeController = Provider.of<ItemModel>(context).sizeController;
     List<TextEditingController> qtyController = Provider.of<ItemModel>(context).qtyController;
@@ -121,14 +125,11 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                             reset();
 
                             setState(() {
-                              myItem1 = <int>[];
-                              myItem2 = <int>[];
-                              myItem3 = <int>[];
-                              myItem4 = <int>[];
-                              Provider.of<ItemModel>(context, listen: false).updateMyItem1(myItem1);
-                              Provider.of<ItemModel>(context, listen: false).updateMyItem2(myItem2);
-                              Provider.of<ItemModel>(context, listen: false).updateMyItem3(myItem3);
-                              Provider.of<ItemModel>(context, listen: false).updateMyItem4(myItem4);
+                              Provider.of<ItemModel>(context, listen: false).updateMyItem1(<int>[]);
+                              Provider.of<ItemModel>(context, listen: false).updateMyItem2(<int>[]);
+                              Provider.of<ItemModel>(context, listen: false).updateMyItem3(<int>[]);
+                              Provider.of<ItemModel>(context, listen: false).updateMyItem4(<int>[]);
+                              cheapest=<int>[];
                             });
 
                             sizeController[0].clear();
@@ -146,6 +147,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                             sizeController[3].clear();
                             qtyController[3].clear();
                             priceController[3].clear();
+
                           },
                         ),
                         const SizedBox(
@@ -169,6 +171,9 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                           onPressed: () {
                             addItem();
                             print("Add Item");
+                            for (int i = 0; i < itemNum; i++) {
+                              item[i][1] = false;
+                            }
                           },
                         ),
                       ],
@@ -186,7 +191,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                 itemBuilder: (context, index) {
                   return CompareItem(
                     itemNum: item[index][0],
-                    addCart: item[index][1],
+                    isCheapest: item[index][1],
                   );
                 },
               ),
@@ -215,33 +220,52 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                     ),
                   ),
                   theOnTapFunc: (){
+
                     print("item 1 : ${myItem1}");
                     print("item 2 : ${myItem2}");
                     print("item 3 : ${myItem3}");
                     print("item 4 : ${myItem4}");
 
+                    setState(() {
+                      cheapest=<int>[];
+                      for (int i = 0; i < itemNum; i++) {
+                        item[i][1] = false;
+                      }
+                    });
+
                     double perDiff = 0.0;
                     switch (item.length){
-
                       case 2:{
                         if(myItem1.isNotEmpty && myItem2.isNotEmpty){
                           double item1 = pricePerUnit(myItem1);
                           double item2 = pricePerUnit(myItem2);
 
-                          Map<double, String> itemMap = {
-                            item1: "Item 1",
-                            item2: "Item 2",
-                          };
-                          List<double> prices = itemMap.keys.toList();
-                          prices.sort();
-                          double cheapestPrice = prices[0];
-                          double runnerUpPrice = prices[1];
-                          String? cheapestItem = itemMap[cheapestPrice];
-                          String? runnerUpItem = itemMap[runnerUpPrice];
+                          if(item1 == item2){
+                            print("All items have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            break;
+                          }else{
+                            Map<double, String> itemMap = {
+                              item1: "Item 1",
+                              item2: "Item 2",
+                            };
+                            List<double> prices = itemMap.keys.toList();
+                            prices.sort();
+                            double cheapestPrice = prices[0];
+                            double runnerUpPrice = prices[1];
+                            String? cheapestItem = itemMap[cheapestPrice];
+                            String? runnerUpItem = itemMap[runnerUpPrice];
 
-                          perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+                            perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
 
-                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                            if (cheapestItem != null) {
+                              String lastChar = cheapestItem[cheapestItem.length - 1];
+                              cheapest.add(int.parse(lastChar));
+                            }
+                            print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+
+                          }
                         }else{
                           break;
                         }
@@ -253,21 +277,56 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                           double item2 = pricePerUnit(myItem2);
                           double item3 = pricePerUnit(myItem3);
 
-                          Map<double, String> itemMap = {
-                            item1: "Item 1",
-                            item2: "Item 2",
-                            item3: "Item 3",
-                          };
-                          List<double> prices = itemMap.keys.toList();
-                          prices.sort();
-                          double cheapestPrice = prices[0];
-                          double runnerUpPrice = prices[1];
-                          String? cheapestItem = itemMap[cheapestPrice];
-                          String? runnerUpItem = itemMap[runnerUpPrice];
+                          if(item1 == item2 && item2 == item3){
+                            print("All items have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            break;
+                          }
+                          else if((item1 == item2) && (item1 < item3)){
+                            print("Item 1 and Item 2 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                             break;
 
-                          perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+                          }else if((item1 == item3) && (item1 < item2)){
+                            print("Item 1 and Item 3 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(3);
+                            break;
 
-                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                          }else if((item2 == item3) && (item2 < item1)){
+                            print("Item 2 and Item 3 are cheapest and have the same value!");
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            break;
+
+                          }else{
+                            Map<double, String> itemMap = {
+                              item1: "Item 1",
+                              item2: "Item 2",
+                              item3: "Item 3",
+                            };
+                            List<double> prices = itemMap.keys.toList();
+                            prices.sort();
+                            double cheapestPrice = prices[0];
+                            double runnerUpPrice = prices[1];
+                            String? cheapestItem = itemMap[cheapestPrice];
+                            String? runnerUpItem = itemMap[runnerUpPrice];
+
+
+                            perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+
+                            if (cheapestItem != null) {
+                              String lastChar = cheapestItem[cheapestItem.length - 1];
+                              cheapest.add(int.parse(lastChar));
+                            }
+
+                            print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+
+                          }
+
                         }else{
                           break;
                         }
@@ -281,20 +340,105 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                           double item3 = pricePerUnit(myItem3);
                           double item4 = pricePerUnit(myItem4);
 
-                          Map<double, String> itemMap = {
-                            item1: "Item 1",
-                            item2: "Item 2",
-                            item3: "Item 3",
-                            item4: "Item 4",
-                          };
-                          List<double> prices = itemMap.keys.toList();
-                          prices.sort();
-                          double cheapestPrice = prices[0];
-                          double runnerUpPrice = prices[1];
-                          String? cheapestItem = itemMap[cheapestPrice];
-                          String? runnerUpItem = itemMap[runnerUpPrice];
+                          if(item1 == item2 && item2 == item3 && item3 == item4){
+                            print("All items have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            cheapest.add(4);
+                            break;
+                          }else if((item1 == item2) && (item1 < item3) && (item1 < item4)){
+                            print("Item 1 and Item 2 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            break;
 
-                          print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+                          }
+                          else if((item1 == item3) && (item1 < item2) && (item1 < item4)){
+                            print("Item 1 and Item 3 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(3);
+                            break;
+
+                          }
+                          else if((item1 == item4) && (item1 < item2) && (item1 < item3)){
+                            print("Item 1 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(4);
+                            break;
+
+                          }
+                          else if((item2 == item3) && (item2 < item1) && (item2 < item4)){
+                            print("Item 2 and Item 3 are cheapest and have the same value!");
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            break;
+
+                          }
+                          else if((item2 == item4) && (item2 < item1) && (item2 < item3)){
+                            print("Item 2 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(2);
+                            cheapest.add(4);
+                            break;
+
+                          }
+                          else if((item3 == item4) && (item3 < item1) && (item3 < item2)){
+                            print("Item 3 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(3);
+                            cheapest.add(4);
+                            break;
+
+                          }else if(((item1 == item2) && (item1==item3)) && (item1 < item4)){
+                            print("Item 1 and Item 2 and Item 3 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            break;
+                          }
+                          else if(((item1 == item2) && (item1==item4)) && (item1 < item3)){
+                            print("Item 1 and Item 2 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(2);
+                            cheapest.add(4);
+                            break;
+                          }
+                          else if(((item1 == item3) && (item1==item4)) && (item1 < item2)){
+                            print("Item 1 and Item 3 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(1);
+                            cheapest.add(3);
+                            cheapest.add(4);
+                            break;
+                          }
+                          else if(((item2 == item3) && (item2==item4)) && (item2 < item1)){
+                            print("Item 2 and Item 3 and Item 4 are cheapest and have the same value!");
+                            cheapest.add(2);
+                            cheapest.add(3);
+                            cheapest.add(4);
+                            break;
+                          }else{
+                            Map<double, String> itemMap = {
+                              item1: "Item 1",
+                              item2: "Item 2",
+                              item3: "Item 3",
+                              item4: "Item 4",
+                            };
+                            List<double> prices = itemMap.keys.toList();
+                            prices.sort();
+                            double cheapestPrice = prices[0];
+                            double runnerUpPrice = prices[1];
+                            String? cheapestItem = itemMap[cheapestPrice];
+                            String? runnerUpItem = itemMap[runnerUpPrice];
+
+                            if (cheapestItem != null) {
+                              String lastChar = cheapestItem[cheapestItem.length - 1];
+                              cheapest.add(int.parse(lastChar));
+                            }
+                            perDiff =double.parse((((runnerUpPrice - cheapestPrice) / runnerUpPrice )*100).toStringAsFixed(1));
+
+                            print("${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}");
+
+                          }
+
                         }
                         else{
                           break;
@@ -303,6 +447,15 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       break;
                     }
 
+                    setState(() {
+                      // item[0][1] = true;
+                      print(cheapest);
+                      // print(cheapest[0]);
+                      // print(cheapest[1]);
+                      for (int i = 0; i < cheapest.length; i++){
+                        item[cheapest[i]-1][1] = true;
+                      }
+                    });
                   },
                 ),
               ),
