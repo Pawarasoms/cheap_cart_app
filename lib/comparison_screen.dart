@@ -59,7 +59,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
 
   double pricePerUnit(List<int> item) {
     var result = item[2] / (item[0] * item[1]);
-    return double.parse(result.toStringAsFixed(2));
+    return double.parse(result.toStringAsFixed(4));
   }
 
   void findCheapest(Map<double, String> itemMap){
@@ -232,7 +232,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
           padding: EdgeInsets.all(16),
           height: 90,
           decoration: BoxDecoration(
-            color: kDarkGreen,
+            color: kYellow,
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Center(
@@ -295,7 +295,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Comparison',
+          'CHEAP CART',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kBlueGrey,
@@ -451,6 +451,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                             if (myItem1.isNotEmpty && myItem2.isNotEmpty)  {
 
                               List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2)];
+                              print(prices);
 
                               double minPrice = prices.reduce((a, b) => a < b ? a : b);
 
