@@ -94,7 +94,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
         padding: EdgeInsets.all(16),
         height: 90,
         decoration: BoxDecoration(
-          color: kDarkGreen,
+          color: kYellow,
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Center(
@@ -108,10 +108,10 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
 
 
                     // "${cheapestItem} is cheapest and is ${perDiff}% cheaper than ${runnerUpItem}"
-                    Text("${cheapest} is cheapest", style: TextStyle(fontSize: 28, color: Colors.white,fontWeight: FontWeight.bold),),
+                    Text("${cheapest} is cheapest", style: TextStyle(fontSize: 28, color: kBlueGrey,fontWeight: FontWeight.bold),),
                     const SizedBox(height: 2,),
 
-                    Text("It is ${value}% cheaper than ${runnerUp}", style: TextStyle(fontSize: 20, color: Colors.white),
+                    Text("It is ${value}% cheaper than ${runnerUp}", style: TextStyle(fontSize: 20, color: kBlueGrey),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,),
 
@@ -135,7 +135,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
           padding: EdgeInsets.all(16),
           height: 98,
           decoration: BoxDecoration(
-            color: kDarkGreen,
+            color: kYellow,
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Center(
@@ -150,7 +150,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "All items have the",
                         style: TextStyle(
                           fontSize: 28,
-                          color: headAndTailBG,
+                          color: kBlueGrey,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -159,7 +159,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "same value!",
                         style: TextStyle(
                           fontSize: 28,
-                          color:headAndTailBG,
+                          color:kBlueGrey,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -185,7 +185,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
           padding: EdgeInsets.all(16),
           height: 90,
           decoration: BoxDecoration(
-            color: kDarkGreen,
+            color: kYellow,
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Center(
@@ -200,7 +200,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "${cheapestItems[0]} and ${cheapestItems[1]}",
                         style: TextStyle(
                           fontSize: 28,
-                          color: headAndTailBG,
+                          color: kBlueGrey,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -210,7 +210,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "are cheapest",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: kBlueGrey,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -247,7 +247,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "${cheapestItems[0]} and ${cheapestItems[1]} and ${cheapestItems[2]}",
                         style: TextStyle(
                           fontSize: 23,
-                          color: headAndTailBG,
+                          color: kBlueGrey,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -257,7 +257,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "are cheapest",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: kBlueGrey,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -296,255 +296,268 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
       appBar: AppBar(
         title: const Text(
           'Comparison',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: headAndTailBG,
-        foregroundColor: kDarkGreen,
+        backgroundColor: kBlueGrey,
+        foregroundColor: Colors.white,
+
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 20, right: 20, bottom: 20),
-                    child: Row(
-                      children: [
-                        FloatingActionButton.extended(
-                          label: const Text(
-                            'Reset',
-                            style: TextStyle(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                kBlack,
+                kBlueGrey,
+              ],
+            ),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 20, right: 20, bottom: 20),
+                      child: Row(
+                        children: [
+                          FloatingActionButton.extended(
+                            label: const Text(
+                              'Reset',
+                              style: TextStyle(
+                                color: redText,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            backgroundColor: kWhite,
+                            icon: const Icon(
+                              Icons.refresh,
+                              size: 22.0,
                               color: redText,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
                             ),
-                          ),
-                          backgroundColor: kLigthRed,
-                          icon: const Icon(
-                            Icons.refresh,
-                            size: 22.0,
-                            color: redText,
-                          ),
-                          onPressed: () {
-                            reset();
+                            onPressed: () {
+                              reset();
 
-                            setState(() {
-                              Provider.of<ItemModel>(context, listen: false)
-                                  .updateMyItem1(<int>[]);
-                              Provider.of<ItemModel>(context, listen: false)
-                                  .updateMyItem2(<int>[]);
-                              Provider.of<ItemModel>(context, listen: false)
-                                  .updateMyItem3(<int>[]);
-                              Provider.of<ItemModel>(context, listen: false)
-                                  .updateMyItem4(<int>[]);
-                              cheapest = <int>[];
-                            });
+                              setState(() {
+                                Provider.of<ItemModel>(context, listen: false)
+                                    .updateMyItem1(<int>[]);
+                                Provider.of<ItemModel>(context, listen: false)
+                                    .updateMyItem2(<int>[]);
+                                Provider.of<ItemModel>(context, listen: false)
+                                    .updateMyItem3(<int>[]);
+                                Provider.of<ItemModel>(context, listen: false)
+                                    .updateMyItem4(<int>[]);
+                                cheapest = <int>[];
+                              });
 
-                            for(int i=0 ; i<4;i++){
-                              sizeController[i].clear();
-                              qtyController[i].clear();
-                              priceController[i].clear();
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        FloatingActionButton.extended(
-                          label: const Text(
-                            'Add Item',
-                            style: TextStyle(
+                              for(int i=0 ; i<4;i++){
+                                sizeController[i].clear();
+                                qtyController[i].clear();
+                                priceController[i].clear();
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          FloatingActionButton.extended(
+                            label: const Text(
+                              'Add Item',
+                              style: TextStyle(
+                                color: kDarkBlue,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            backgroundColor: kWhite,
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                              size: 22.0,
                               color: kDarkBlue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
                             ),
+                            onPressed: () {
+                              addItem();
+                              print("Add Item");
+                              for (int i = 0; i < itemNum; i++) {
+                                item[i][1] = false;
+                              }
+                            },
                           ),
-                          backgroundColor: kLigthBlue,
-                          icon: const Icon(
-                            Icons.add_circle_outline,
-                            size: 22.0,
-                            color: kDarkBlue,
-                          ),
-                          onPressed: () {
-                            addItem();
-                            print("Add Item");
-                            for (int i = 0; i < itemNum; i++) {
-                              item[i][1] = false;
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 30),
-                itemCount: item.length,
-                itemBuilder: (context, index) {
-                  return CompareItem(
-                    itemNum: item[index][0],
-                    isCheapest: item[index][1],
-                  );
-                },
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                // height: 10,
-                width: double.infinity,
-                alignment: Alignment.center,
-                // color: headAndTailBG,
-                child: BaseCard(
-                  theColor: kLightGreen,
-                  theChild: Container(
-                    width: 200.0,
-                    height: 60.0,
-                    child: const Center(
-                      child: Text(
-                        "Calculate",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: kDarkGreen,
-                        ),
+                        ],
                       ),
-                    ),
-                  ),
-                  theOnTapFunc: () {
-
-                    print("item 1 : ${myItem1}");
-                    print("item 2 : ${myItem2}");
-                    print("item 3 : ${myItem3}");
-                    print("item 4 : ${myItem4}");
-
-                    setState(() {
-                      cheapest = <int>[];
-                      for (int i = 0; i < itemNum; i++) {
-                        item[i][1] = false;
-                      }
-                    });
-
-
-                    switch (item.length) {
-                      case 2:
-                        {
-                          if (myItem1.isNotEmpty && myItem2.isNotEmpty)  {
-
-                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2)];
-
-                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
-
-                            for (int i = 1; i <= prices.length; i++) {
-                              if (prices[i-1] == minPrice) {
-                                cheapest.add(i);
-                              }
-                            }
-
-                            if (cheapest.length == 2 ){
-                              showAllResult();
-                            }else{
-                              Map<double, String> itemMap = {
-                                prices[0]: "Item 1",
-                                prices[1]: "Item 2",
-
-                              };
-                              findCheapest(itemMap);
-                            }
-                          }else {
-                            break;
-                          }
-                        }
-                        break;
-                      case 3:
-                        {
-                          if (myItem1.isNotEmpty &&
-                              myItem2.isNotEmpty &&
-                              myItem3.isNotEmpty) {
-
-                            List<String> items = ['Item 1', 'Item 2', 'Item 3'];
-
-                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3)];
-
-                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
-
-                            for (int i = 1; i <= prices.length; i++) {
-                              if (prices[i-1] == minPrice) {
-                                cheapest.add(i);
-                              }
-                            }
-
-                            if (cheapest.length == 3 ){
-                              showAllResult();
-                            }else if( cheapest.length == 2 ){
-                              showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
-                            }else{
-                              Map<double, String> itemMap = {
-                                prices[0]: "Item 1",
-                                prices[1]: "Item 2",
-                                prices[2]: "Item 3",
-                              };
-                              findCheapest(itemMap);
-                            }
-                          }
-                        }
-                        break;
-                      case 4:
-                        {
-                          if (myItem1.isNotEmpty &&
-                              myItem2.isNotEmpty &&
-                              myItem3.isNotEmpty &&
-                              myItem4.isNotEmpty) {
-
-                            List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
-
-                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3), pricePerUnit(myItem4)];
-
-                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
-
-                            for (int i = 1; i <= prices.length; i++) {
-                              if (prices[i-1] == minPrice) {
-                                cheapest.add(i);
-                              }
-                            }
-
-                            if (cheapest.length == 4 ){
-                              showAllResult();
-                            }else if( cheapest.length == 3 || cheapest.length ==2){
-                              showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
-                              
-                            }else{
-                              Map<double, String> itemMap = {
-                                prices[0]: "Item 1",
-                                prices[1]: "Item 2",
-                                prices[2]: "Item 3",
-                                prices[3]: "Item 4",
-                              };
-                              findCheapest(itemMap);
-                            }
-                          } else {
-                            break;
-                          }
-                        }
-                        break;
-                    }
-                    setState(() {
-                      for (int i = 0; i < cheapest.length; i++) {
-                        item[cheapest[i] - 1][1] = true;
-                      }
-                    });
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(bottom: 30),
+                  itemCount: item.length,
+                  itemBuilder: (context, index) {
+                    return CompareItem(
+                      itemNum: item[index][0],
+                      isCheapest: item[index][1],
+                    );
                   },
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child: Container(
+                  // height: 10,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  // color: headAndTailBG,
+                  child: BaseCard(
+                    theColor: backgroundButton,
+                    theChild: Container(
+                      width: 200.0,
+                      height: 60.0,
+                      child: const Center(
+                        child: Text(
+                          "Calculate",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kBlueGrey,
+                          ),
+                        ),
+                      ),
+                    ),
+                    theOnTapFunc: () {
+
+                      print("item 1 : ${myItem1}");
+                      print("item 2 : ${myItem2}");
+                      print("item 3 : ${myItem3}");
+                      print("item 4 : ${myItem4}");
+
+                      setState(() {
+                        cheapest = <int>[];
+                        for (int i = 0; i < itemNum; i++) {
+                          item[i][1] = false;
+                        }
+                      });
+
+
+                      switch (item.length) {
+                        case 2:
+                          {
+                            if (myItem1.isNotEmpty && myItem2.isNotEmpty)  {
+
+                              List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2)];
+
+                              double minPrice = prices.reduce((a, b) => a < b ? a : b);
+
+                              for (int i = 1; i <= prices.length; i++) {
+                                if (prices[i-1] == minPrice) {
+                                  cheapest.add(i);
+                                }
+                              }
+
+                              if (cheapest.length == 2 ){
+                                showAllResult();
+                              }else{
+                                Map<double, String> itemMap = {
+                                  prices[0]: "Item 1",
+                                  prices[1]: "Item 2",
+
+                                };
+                                findCheapest(itemMap);
+                              }
+                            }else {
+                              break;
+                            }
+                          }
+                          break;
+                        case 3:
+                          {
+                            if (myItem1.isNotEmpty &&
+                                myItem2.isNotEmpty &&
+                                myItem3.isNotEmpty) {
+
+                              List<String> items = ['Item 1', 'Item 2', 'Item 3'];
+
+                              List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3)];
+
+                              double minPrice = prices.reduce((a, b) => a < b ? a : b);
+
+                              for (int i = 1; i <= prices.length; i++) {
+                                if (prices[i-1] == minPrice) {
+                                  cheapest.add(i);
+                                }
+                              }
+
+                              if (cheapest.length == 3 ){
+                                showAllResult();
+                              }else if( cheapest.length == 2 ){
+                                showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
+                              }else{
+                                Map<double, String> itemMap = {
+                                  prices[0]: "Item 1",
+                                  prices[1]: "Item 2",
+                                  prices[2]: "Item 3",
+                                };
+                                findCheapest(itemMap);
+                              }
+                            }
+                          }
+                          break;
+                        case 4:
+                          {
+                            if (myItem1.isNotEmpty &&
+                                myItem2.isNotEmpty &&
+                                myItem3.isNotEmpty &&
+                                myItem4.isNotEmpty) {
+
+                              List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
+
+                              List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3), pricePerUnit(myItem4)];
+
+                              double minPrice = prices.reduce((a, b) => a < b ? a : b);
+
+                              for (int i = 1; i <= prices.length; i++) {
+                                if (prices[i-1] == minPrice) {
+                                  cheapest.add(i);
+                                }
+                              }
+
+                              if (cheapest.length == 4 ){
+                                showAllResult();
+                              }else if( cheapest.length == 3 || cheapest.length ==2){
+                                showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
+
+                              }else{
+                                Map<double, String> itemMap = {
+                                  prices[0]: "Item 1",
+                                  prices[1]: "Item 2",
+                                  prices[2]: "Item 3",
+                                  prices[3]: "Item 4",
+                                };
+                                findCheapest(itemMap);
+                              }
+                            } else {
+                              break;
+                            }
+                          }
+                          break;
+                      }
+                      setState(() {
+                        for (int i = 0; i < cheapest.length; i++) {
+                          item[cheapest[i] - 1][1] = true;
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

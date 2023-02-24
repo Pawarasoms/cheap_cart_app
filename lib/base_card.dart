@@ -18,13 +18,13 @@ class BaseCard extends StatelessWidget {
         // margin: const EdgeInsets.all(0.0),
         decoration: BoxDecoration(
           color: theColor,
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(25.0),
           boxShadow:[
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: Offset(0, 2),
+              color: Colors.grey.shade500,
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(4, 4),
             )
           ]
         ),

@@ -44,7 +44,7 @@ class CompareItemState extends State<CompareItem> {
             children: [
               Text(
                 "Item "+ widget.itemNum.toString(),
-                style: TextStyle(fontSize: 20, color: kLightGrey),
+                style: TextStyle(fontSize: 22, color: kWhite),
               ),
             ],
           ),
@@ -52,7 +52,7 @@ class CompareItemState extends State<CompareItem> {
         Container(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
           child: BaseCard(
-            theColor:widget.isCheapest ? kLigthPink : backgroundButton,
+            theColor:widget.isCheapest ? kYellow : backgroundButton,
 
             theChild: Container(
               width: 600.0,
@@ -67,7 +67,7 @@ class CompareItemState extends State<CompareItem> {
                       children: [
                         Container(
                           child: BaseCard(
-                            theColor: kDarkGrey,
+                            theColor: kBlueGrey,
                             theChild: Container(
                               width: 80.0,
                               height: 40.0,
@@ -86,7 +86,7 @@ class CompareItemState extends State<CompareItem> {
                         ),
                         Container(
                           child: BaseCard(
-                            theColor: kDarkGrey,
+                            theColor: kBlueGrey,
                             theChild: Container(
                               width: 80.0,
                               height: 40.0,
@@ -105,7 +105,7 @@ class CompareItemState extends State<CompareItem> {
                         ),
                         Container(
                           child: BaseCard(
-                            theColor: kDarkGrey,
+                            theColor: kBlueGrey,
                             theChild: Container(
                               width: 80.0,
                               height: 40.0,
@@ -134,7 +134,7 @@ class CompareItemState extends State<CompareItem> {
                       children: [
                         Container(
                           child: BaseCard(
-                            theColor: kLightGreen,
+                            theColor: kDarkGrey,
                             theChild: Container(
                               width: 100.0,
                               height: 80.0,
@@ -157,15 +157,15 @@ class CompareItemState extends State<CompareItem> {
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
                                       borderSide: BorderSide(width: 2, color: kWhite),
                                     ),
                                     filled: true,
                                     fillColor: kWhite,
                                   ),
                                   style: const TextStyle(
-                                    color: kDarkGreen,
-                                    fontSize: 25,
+                                    color: kBlueGrey,
+                                    fontSize: 26,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   textAlign: TextAlign.center,
@@ -182,7 +182,7 @@ class CompareItemState extends State<CompareItem> {
                         ),
                         Container(
                           child: BaseCard(
-                            theColor: kLightGreen,
+                            theColor: kDarkGrey,
                             theChild: Container(
                               width: 100.0,
                               height: 80.0,
@@ -205,15 +205,15 @@ class CompareItemState extends State<CompareItem> {
                                   textInputAction: TextInputAction.next,
                                   decoration: const InputDecoration(
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
                                       borderSide: BorderSide(width: 2, color: kWhite),
                                     ),
                                     filled: true,
                                     fillColor: kWhite,
                                   ),
                                   style: const TextStyle(
-                                    color: kDarkGreen,
-                                    fontSize: 25,
+                                    color: kBlueGrey,
+                                    fontSize: 26,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   textAlign: TextAlign.center,
@@ -230,7 +230,7 @@ class CompareItemState extends State<CompareItem> {
                         ),
                         Container(
                           child: BaseCard(
-                            theColor: kLightGreen,
+                            theColor: kDarkGrey,
                             theChild: Container(
                               width: 100.0,
                               height: 80.0,
@@ -253,15 +253,15 @@ class CompareItemState extends State<CompareItem> {
                                   textInputAction: TextInputAction.done,
                                   decoration: const InputDecoration(
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      borderRadius: BorderRadius.all(Radius.circular(15)),
                                       borderSide: BorderSide(width: 2, color: kWhite),
                                     ),
                                     filled: true,
                                     fillColor: kWhite,
                                   ),
                                   style: const TextStyle(
-                                    color: kDarkGreen,
-                                    fontSize: 25,
+                                    color: kBlueGrey,
+                                    fontSize: 26,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   textAlign: TextAlign.center,
