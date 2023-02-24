@@ -31,7 +31,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
   }
 
   int itemNum = 2;
-  int _selectedIndex = 0;
 
   List item = [
     [1, false],
@@ -43,7 +42,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
       if (itemNum + 1 < 5) {
         item.add([itemNum + 1, false]);
         itemNum = itemNum + 1;
-        print(itemNum);
       }
     });
   }
@@ -62,6 +60,31 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
   double pricePerUnit(List<int> item) {
     var result = item[2] / (item[0] * item[1]);
     return double.parse(result.toStringAsFixed(2));
+  }
+
+  void findCheapest(Map<double, String> itemMap){
+
+    cheapest = <int>[];
+    double perDiff = 0.0;
+    List<double> prices = itemMap.keys.toList();
+    prices.sort();
+    double cheapestPrice = prices[0];
+    double runnerUpPrice = prices[1];
+    String? cheapestItem = itemMap[cheapestPrice];
+    String? runnerUpItem = itemMap[runnerUpPrice];
+
+    if (cheapestItem != null) {
+      String lastChar =
+      cheapestItem[cheapestItem.length - 1];
+      cheapest.add(int.parse(lastChar));
+    }
+    perDiff = double.parse(
+        (((runnerUpPrice - cheapestPrice) /
+            runnerUpPrice) *
+            100)
+            .toStringAsFixed(1));
+    showCheapestResult(cheapestItem!, runnerUpItem!, perDiff);
+
   }
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showCheapestResult(
@@ -127,7 +150,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "All items have the",
                         style: TextStyle(
                           fontSize: 28,
-                          color: Colors.white,
+                          color: headAndTailBG,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -136,7 +159,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         "same value!",
                         style: TextStyle(
                           fontSize: 28,
-                          color: Colors.white,
+                          color:headAndTailBG,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -155,106 +178,108 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     );
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showTwoResult(
-      String first, String second) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Container(
-        padding: EdgeInsets.all(16),
-        height: 90,
-        decoration: BoxDecoration(
-          color: kDarkGreen,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Center(
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${first} and ${second} are cheapest",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showTwoOrMoreResult(List<String> cheapestItems) {
+    if (cheapestItems.length == 2){
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(
+          padding: EdgeInsets.all(16),
+          height: 90,
+          decoration: BoxDecoration(
+            color: kDarkGreen,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Center(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${cheapestItems[0]} and ${cheapestItems[1]}",
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: headAndTailBG,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 2,),
-                    Text(
-                      "They have same value!",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
+                      const SizedBox(height: 2,),
+                      Text(
+                        "are cheapest",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ));
+
+    }else{
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(
+          padding: EdgeInsets.all(16),
+          height: 90,
+          decoration: BoxDecoration(
+            color: kDarkGreen,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Center(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${cheapestItems[0]} and ${cheapestItems[1]} and ${cheapestItems[2]}",
+                        style: TextStyle(
+                          fontSize: 23,
+                          color: headAndTailBG,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 2,),
+                      Text(
+                        "are cheapest",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ));
+    }
+
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showThreeResult(
-      String first, String second, String third) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Container(
-        padding: EdgeInsets.all(16),
-        height: 90,
-        decoration: BoxDecoration(
-          color: kDarkGreen,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Center(
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${first} and ${second} and ${third}",
-                      style: TextStyle(
-                        fontSize: 23,
-                        color: headAndTailBG,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 2,),
-                    Text(
-                      "are cheapest",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
+
     List<int> myItem1 = Provider.of<ItemModel>(context).item1;
     List<int> myItem2 = Provider.of<ItemModel>(context).item2;
     List<int> myItem3 = Provider.of<ItemModel>(context).item3;
@@ -318,21 +343,11 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                               cheapest = <int>[];
                             });
 
-                            sizeController[0].clear();
-                            qtyController[0].clear();
-                            priceController[0].clear();
-
-                            sizeController[1].clear();
-                            qtyController[1].clear();
-                            priceController[1].clear();
-
-                            sizeController[2].clear();
-                            qtyController[2].clear();
-                            priceController[2].clear();
-
-                            sizeController[3].clear();
-                            qtyController[3].clear();
-                            priceController[3].clear();
+                            for(int i=0 ; i<4;i++){
+                              sizeController[i].clear();
+                              qtyController[i].clear();
+                              priceController[i].clear();
+                            }
                           },
                         ),
                         const SizedBox(
@@ -404,6 +419,7 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                     ),
                   ),
                   theOnTapFunc: () {
+
                     print("item 1 : ${myItem1}");
                     print("item 2 : ${myItem2}");
                     print("item 3 : ${myItem3}");
@@ -416,45 +432,33 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                       }
                     });
 
-                    double perDiff = 0.0;
+
                     switch (item.length) {
                       case 2:
                         {
-                          if (myItem1.isNotEmpty && myItem2.isNotEmpty) {
-                            double item1 = pricePerUnit(myItem1);
-                            double item2 = pricePerUnit(myItem2);
+                          if (myItem1.isNotEmpty && myItem2.isNotEmpty)  {
 
-                            if (item1 == item2) {
-                              showAllResult();
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              break;
-                            } else {
-                              Map<double, String> itemMap = {
-                                item1: "Item 1",
-                                item2: "Item 2",
-                              };
-                              List<double> prices = itemMap.keys.toList();
-                              prices.sort();
-                              double cheapestPrice = prices[0];
-                              double runnerUpPrice = prices[1];
-                              String? cheapestItem = itemMap[cheapestPrice];
-                              String? runnerUpItem = itemMap[runnerUpPrice];
+                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2)];
 
-                              perDiff = double.parse(
-                                  (((runnerUpPrice - cheapestPrice) /
-                                              runnerUpPrice) *
-                                          100)
-                                      .toStringAsFixed(1));
+                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
 
-                              if (cheapestItem != null) {
-                                String lastChar =
-                                    cheapestItem[cheapestItem.length - 1];
-                                cheapest.add(int.parse(lastChar));
+                            for (int i = 1; i <= prices.length; i++) {
+                              if (prices[i-1] == minPrice) {
+                                cheapest.add(i);
                               }
-                              showCheapestResult(cheapestItem!, runnerUpItem!, perDiff);
                             }
-                          } else {
+
+                            if (cheapest.length == 2 ){
+                              showAllResult();
+                            }else{
+                              Map<double, String> itemMap = {
+                                prices[0]: "Item 1",
+                                prices[1]: "Item 2",
+
+                              };
+                              findCheapest(itemMap);
+                            }
+                          }else {
                             break;
                           }
                         }
@@ -464,59 +468,31 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                           if (myItem1.isNotEmpty &&
                               myItem2.isNotEmpty &&
                               myItem3.isNotEmpty) {
-                            double item1 = pricePerUnit(myItem1);
-                            double item2 = pricePerUnit(myItem2);
-                            double item3 = pricePerUnit(myItem3);
 
-                            if (item1 == item2 && item2 == item3) {
-                              showAllResult();
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              break;
-                            } else if ((item1 == item2) && (item1 < item3)) {
-                              showTwoResult("Item 1", "Item 2");
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              break;
-                            } else if ((item1 == item3) && (item1 < item2)) {
-                              showTwoResult("Item 1", "Item 3");
-                              cheapest.add(1);
-                              cheapest.add(3);
-                              break;
-                            } else if ((item2 == item3) && (item2 < item1)) {
-                              showTwoResult("Item 2", "Item 3");
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              break;
-                            } else {
-                              Map<double, String> itemMap = {
-                                item1: "Item 1",
-                                item2: "Item 2",
-                                item3: "Item 3",
-                              };
-                              List<double> prices = itemMap.keys.toList();
-                              prices.sort();
-                              double cheapestPrice = prices[0];
-                              double runnerUpPrice = prices[1];
-                              String? cheapestItem = itemMap[cheapestPrice];
-                              String? runnerUpItem = itemMap[runnerUpPrice];
+                            List<String> items = ['Item 1', 'Item 2', 'Item 3'];
 
-                              perDiff = double.parse(
-                                  (((runnerUpPrice - cheapestPrice) /
-                                              runnerUpPrice) *
-                                          100)
-                                      .toStringAsFixed(1));
+                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3)];
 
-                              if (cheapestItem != null) {
-                                String lastChar =
-                                    cheapestItem[cheapestItem.length - 1];
-                                cheapest.add(int.parse(lastChar));
+                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
+
+                            for (int i = 1; i <= prices.length; i++) {
+                              if (prices[i-1] == minPrice) {
+                                cheapest.add(i);
                               }
-                              showCheapestResult(cheapestItem!, runnerUpItem!, perDiff);
                             }
-                          } else {
-                            break;
+
+                            if (cheapest.length == 3 ){
+                              showAllResult();
+                            }else if( cheapest.length == 2 ){
+                              showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
+                            }else{
+                              Map<double, String> itemMap = {
+                                prices[0]: "Item 1",
+                                prices[1]: "Item 2",
+                                prices[2]: "Item 3",
+                              };
+                              findCheapest(itemMap);
+                            }
                           }
                         }
                         break;
@@ -526,115 +502,32 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                               myItem2.isNotEmpty &&
                               myItem3.isNotEmpty &&
                               myItem4.isNotEmpty) {
-                            double item1 = pricePerUnit(myItem1);
-                            double item2 = pricePerUnit(myItem2);
-                            double item3 = pricePerUnit(myItem3);
-                            double item4 = pricePerUnit(myItem4);
 
-                            if (item1 == item2 &&
-                                item2 == item3 &&
-                                item3 == item4) {
-                              showAllResult();
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              cheapest.add(4);
-                              break;
-                            } else if ((item1 == item2) &&
-                                (item1 < item3) &&
-                                (item1 < item4)) {
-                              showTwoResult("Item 1", "Item 2");
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              break;
-                            } else if ((item1 == item3) &&
-                                (item1 < item2) &&
-                                (item1 < item4)) {
-                              showTwoResult("Item 1", "Item 3");
-                              cheapest.add(1);
-                              cheapest.add(3);
-                              break;
-                            } else if ((item1 == item4) &&
-                                (item1 < item2) &&
-                                (item1 < item3)) {
-                              showTwoResult("Item 1", "Item 4");
-                              cheapest.add(1);
-                              cheapest.add(4);
-                              break;
-                            } else if ((item2 == item3) &&
-                                (item2 < item1) &&
-                                (item2 < item4)) {
-                              showTwoResult("Item 2", "Item 3");
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              break;
-                            } else if ((item2 == item4) &&
-                                (item2 < item1) &&
-                                (item2 < item3)) {
-                              showTwoResult("Item 2", "Item 4");
-                              cheapest.add(2);
-                              cheapest.add(4);
-                              break;
-                            } else if ((item3 == item4) &&
-                                (item3 < item1) &&
-                                (item3 < item2)) {
-                              showTwoResult("Item 3", "Item 4");
-                              cheapest.add(3);
-                              cheapest.add(4);
-                              break;
-                            } else if (((item1 == item2) && (item1 == item3)) &&
-                                (item1 < item4)) {
-                              showThreeResult("Item 1", "Item 2" , "Item 3");
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              break;
-                            } else if (((item1 == item2) && (item1 == item4)) &&
-                                (item1 < item3)) {
-                              showThreeResult("Item 1", "Item 2" , "Item 4");
-                              cheapest.add(1);
-                              cheapest.add(2);
-                              cheapest.add(4);
-                              break;
-                            } else if (((item1 == item3) && (item1 == item4)) &&
-                                (item1 < item2)) {
-                              showThreeResult("Item 1", "Item 3" , "Item 4");
-                              cheapest.add(1);
-                              cheapest.add(3);
-                              cheapest.add(4);
-                              break;
-                            } else if (((item2 == item3) && (item2 == item4)) &&
-                                (item2 < item1)) {
-                              showThreeResult("Item 2", "Item 3" , "Item 4");
-                              cheapest.add(2);
-                              cheapest.add(3);
-                              cheapest.add(4);
-                              break;
-                            } else {
-                              Map<double, String> itemMap = {
-                                item1: "Item 1",
-                                item2: "Item 2",
-                                item3: "Item 3",
-                                item4: "Item 4",
-                              };
-                              List<double> prices = itemMap.keys.toList();
-                              prices.sort();
-                              double cheapestPrice = prices[0];
-                              double runnerUpPrice = prices[1];
-                              String? cheapestItem = itemMap[cheapestPrice];
-                              String? runnerUpItem = itemMap[runnerUpPrice];
+                            List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
-                              if (cheapestItem != null) {
-                                String lastChar =
-                                    cheapestItem[cheapestItem.length - 1];
-                                cheapest.add(int.parse(lastChar));
+                            List<double> prices = [pricePerUnit(myItem1), pricePerUnit(myItem2), pricePerUnit(myItem3), pricePerUnit(myItem4)];
+
+                            double minPrice = prices.reduce((a, b) => a < b ? a : b);
+
+                            for (int i = 1; i <= prices.length; i++) {
+                              if (prices[i-1] == minPrice) {
+                                cheapest.add(i);
                               }
-                              perDiff = double.parse(
-                                  (((runnerUpPrice - cheapestPrice) /
-                                              runnerUpPrice) *
-                                          100)
-                                      .toStringAsFixed(1));
-                              showCheapestResult(cheapestItem!, runnerUpItem!, perDiff);
+                            }
+
+                            if (cheapest.length == 4 ){
+                              showAllResult();
+                            }else if( cheapest.length == 3 || cheapest.length ==2){
+                              showTwoOrMoreResult(cheapest.map((i) => items[i-1]).toList());
+                              
+                            }else{
+                              Map<double, String> itemMap = {
+                                prices[0]: "Item 1",
+                                prices[1]: "Item 2",
+                                prices[2]: "Item 3",
+                                prices[3]: "Item 4",
+                              };
+                              findCheapest(itemMap);
                             }
                           } else {
                             break;
@@ -642,7 +535,6 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
                         }
                         break;
                     }
-
                     setState(() {
                       for (int i = 0; i < cheapest.length; i++) {
                         item[cheapest[i] - 1][1] = true;
@@ -657,4 +549,5 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
       ),
     );
   }
+
 }
