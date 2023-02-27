@@ -143,7 +143,7 @@ class CompareItemState extends State<CompareItem> {
                                 child: TextField(
                                   controller: sizeController[widget.itemNum-1],
                                   onChanged: (value) {
-                                    item[0] = int.tryParse(value) ?? 0;
+                                    item[0] = int.tryParse(value) ?? 1;
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
                                     }else if (widget.itemNum == 2 ){
@@ -174,6 +174,7 @@ class CompareItemState extends State<CompareItem> {
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly,
                                     LengthLimitingTextInputFormatter(4),
+                                    FilteringTextInputFormatter.deny(RegExp("[0]")),
                                   ], // Only numbers can be entered
                                 ),
                               ),
@@ -191,7 +192,7 @@ class CompareItemState extends State<CompareItem> {
                                 child: TextField(
                                   controller: qtyController[widget.itemNum-1],
                                   onChanged: (value) {
-                                    item[1] = int.tryParse(value) ?? 0;
+                                    item[1] = int.tryParse(value) ?? 1;
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
                                     }else if (widget.itemNum == 2 ){
@@ -221,7 +222,8 @@ class CompareItemState extends State<CompareItem> {
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(4),
+                                    LengthLimitingTextInputFormatter(4),
+                                    FilteringTextInputFormatter.deny(RegExp("[0]")),
                                   ], // Only numbers can be entered
                                 ),
                               ),
@@ -239,7 +241,7 @@ class CompareItemState extends State<CompareItem> {
                                 child: TextField(
                                   controller: priceController[widget.itemNum-1],
                                   onChanged: (value) {
-                                    item[2] = int.tryParse(value) ?? 0;
+                                    item[2] = int.tryParse(value) ?? 1;
                                     if (widget.itemNum == 1 ){
                                       Provider.of<ItemModel>(context, listen: false).updateMyItem1(item);
                                     }else if (widget.itemNum == 2 ){
@@ -269,7 +271,8 @@ class CompareItemState extends State<CompareItem> {
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(4),
+                                    LengthLimitingTextInputFormatter(4),
+                                    FilteringTextInputFormatter.deny(RegExp("[0]")),
                                   ], // Only numbers can be entered
                                 ),
                               ),
